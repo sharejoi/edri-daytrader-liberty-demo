@@ -3,307 +3,782 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Intent to Value | EDRI + Cognitive QE & DevOps</title>
+  <title>Intent to Value: DayTrader UI & Liberty Modernization</title>
   <style>
     :root {
-      --bg: #0b1220;
-      --card: #121b2e;
-      --border: #24324d;
-      --text: #e2e8f0;
-      --muted: #94a3b8;
-      --blue: #38bdf8;
-      --green: #22c55e;
-      --red: #ef4444;
-      --amber: #f59e0b;
+      --bg: #07111d;
+      --bg-2: #0d1728;
+      --panel: #101d2f;
+      --panel-strong: #0b1524;
+      --border: #24344d;
+      --text: #e5eefb;
+      --muted: #9bb0cc;
+      --blue: #67d2ff;
+      --cyan: #6ee7f9;
+      --green: #35d399;
+      --red: #ff6b6b;
+      --amber: #f6c453;
+      --violet: #8b5cf6;
+      --shadow: rgba(7, 17, 29, 0.42);
     }
+
     * { box-sizing: border-box; }
-    body {
+
+    html, body {
       margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background: var(--bg);
+      min-height: 100%;
+      background:
+        radial-gradient(circle at top left, rgba(103, 210, 255, 0.12), transparent 26%),
+        radial-gradient(circle at bottom right, rgba(139, 92, 246, 0.12), transparent 28%),
+        var(--bg);
       color: var(--text);
+      font-family: Inter, "Segoe UI", sans-serif;
       line-height: 1.5;
     }
-    .container { max-width: 1120px; margin: 0 auto; padding: 32px 20px 64px; }
-    header {
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 24px;
-      margin-bottom: 28px;
+
+    body {
+      padding: 32px 20px 64px;
+    }
+
+    .page {
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    .topbar {
       display: flex;
-      flex-wrap: wrap;
       justify-content: space-between;
       align-items: center;
-      gap: 16px;
+      gap: 18px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 22px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
     }
-    .badge {
+
+    .eyebrow {
       display: inline-block;
-      padding: 4px 10px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 600;
-      background: rgba(56, 189, 248, 0.15);
+      background: rgba(103, 210, 255, 0.12);
       color: var(--blue);
-      border: 1px solid rgba(56, 189, 248, 0.35);
+      border: 1px solid rgba(103, 210, 255, 0.35);
+      border-radius: 999px;
+      padding: 5px 10px;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 700;
     }
-    h1 { margin: 8px 0 4px; font-size: 28px; }
-    .subtitle { color: var(--muted); margin: 0; font-size: 15px; }
-    .grid-5 {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 14px;
-      margin-bottom: 28px;
+
+    h1 {
+      margin: 12px 0 4px;
+      font-size: clamp(2rem, 3vw, 3rem);
+      line-height: 1.1;
+      letter-spacing: -0.04em;
     }
-    .stage-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 16px;
-      cursor: pointer;
-      transition: border-color 0.2s, transform 0.15s;
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.98rem;
+      max-width: 760px;
     }
-    .stage-card:hover, .stage-card.active {
-      border-color: var(--blue);
-      transform: translateY(-2px);
+
+    .actions-link {
+      color: var(--cyan);
+      text-decoration: none;
+      font-weight: 700;
+      border: 1px solid rgba(110, 231, 249, 0.45);
+      background: rgba(110, 231, 249, 0.08);
+      border-radius: 10px;
+      padding: 10px 14px;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
     }
-    .stage-num { font-size: 12px; font-weight: 700; color: var(--blue); text-transform: uppercase; }
-    .stage-title { font-size: 16px; font-weight: 700; margin: 4px 0 6px; }
-    .stage-desc { font-size: 13px; color: var(--muted); margin: 0; }
+
+    .actions-link:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 20px rgba(110, 231, 249, 0.12);
+    }
+
     .panel {
-      background: var(--card);
+      background: linear-gradient(180deg, rgba(16, 29, 47, 1), rgba(11, 21, 36, 1));
       border: 1px solid var(--border);
-      border-radius: 14px;
+      border-radius: 16px;
+      box-shadow: 0 20px 40px var(--shadow);
       padding: 22px;
       margin-bottom: 24px;
     }
-    .panel h2 { margin-top: 0; font-size: 19px; }
-    .controls {
+
+    .panel h2 {
+      margin: 0 0 10px;
+      font-size: 1.3rem;
+      letter-spacing: -0.02em;
+    }
+
+    .panel-copy {
+      margin: 0 0 16px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .button-row {
       display: flex;
       flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .step-btn {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: rgba(148, 163, 184, 0.08);
+      color: var(--text);
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      font-size: 0.9rem;
+    }
+
+    .step-btn.active {
+      background: rgba(103, 210, 255, 0.12);
+      border-color: rgba(103, 210, 255, 0.5);
+      color: var(--blue);
+    }
+
+    .step-btn.step-red.active {
+      background: rgba(255, 107, 107, 0.12);
+      border-color: rgba(255, 107, 107, 0.5);
+      color: #ffb2b2;
+    }
+
+    .step-btn.step-green.active {
+      background: rgba(53, 211, 153, 0.12);
+      border-color: rgba(53, 211, 153, 0.5);
+      color: #b8f5d8;
+    }
+
+    .compare-grid {
+      display: grid;
+      grid-template-columns: 1.12fr 1fr;
+      gap: 18px;
+    }
+
+    .browser {
+      background: #131f2f;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02);
+    }
+
+    .browser-top {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      height: 38px;
+      background: rgba(148, 163, 184, 0.08);
+      border-bottom: 1px solid var(--border);
+      padding: 0 14px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .dot.red { background: #ff5f57; }
+    .dot.yellow { background: #ffbd2e; }
+    .dot.green { background: #28c840; }
+
+    .browser-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #1a2639;
+      border-bottom: 1px solid var(--border);
+      padding: 10px 14px;
+      font-size: 0.76rem;
+      color: var(--muted);
+    }
+
+    .browser-address {
+      flex: 1;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 7px 10px;
+      margin-left: 10px;
+      color: var(--text);
+    }
+
+    .browser-body {
+      padding: 18px 14px 14px;
+      background: linear-gradient(180deg, #102033 0%, #111d2d 100%);
+      min-height: 300px;
+    }
+
+    .browser-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .status-chip {
+      font-size: 0.7rem;
+      font-weight: 800;
+      border-radius: 999px;
+      padding: 5px 8px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .status-red {
+      background: rgba(255, 107, 107, 0.12);
+      color: #ffb2b2;
+      border: 1px solid rgba(255, 107, 107, 0.35);
+    }
+
+    .status-green {
+      background: rgba(53, 211, 153, 0.12);
+      color: #b8f5d8;
+      border: 1px solid rgba(53, 211, 153, 0.35);
+    }
+
+    .status-amber {
+      background: rgba(246, 196, 83, 0.12);
+      color: #f8d67c;
+      border: 1px solid rgba(246, 196, 83, 0.35);
+    }
+
+    .dashboard { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 12px; }
+    .mini-card {
+      background: rgba(148, 163, 184, 0.04);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+      min-height: 88px;
+    }
+
+    .mini-label {
+      color: var(--muted);
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .mini-value {
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin-top: 8px;
+    }
+
+    .product-table {
+      margin-top: 16px;
+      background: rgba(148, 163, 184, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .product-row {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr;
+      border-bottom: 1px solid var(--border);
+      padding: 10px 12px;
+      font-size: 0.8rem;
+    }
+
+    .product-row:last-child { border-bottom: none; }
+    .product-row.header {
+      background: rgba(103, 210, 255, 0.05);
+      font-weight: 700;
+    }
+
+    .diff-card {
+      background: var(--panel-strong);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+    }
+
+    .diff-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(148, 163, 184, 0.04);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+    }
+
+    pre {
+      margin: 0;
+      padding: 16px 14px 18px;
+      background: #070f1a;
+      color: #dfeaf9;
+      font-size: 0.75rem;
+      line-height: 1.55;
+      white-space: pre-wrap;
+      word-break: break-word;
+      min-height: 295px;
+      font-family: "SFMono-Regular", Consolas, monospace;
+    }
+
+    .token-red { color: #ff9d9d; }
+    .token-green { color: #9ae6b4; }
+    .token-amber { color: #f7d77d; }
+    .token-blue { color: #9ad9ff; }
+    .token-muted { color: #8ea4c4; }
+
+    .workflow-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(160px, 1fr));
       gap: 12px;
       margin-bottom: 18px;
     }
-    button {
-      background: #1e293b;
-      color: var(--text);
+
+    .workflow-card {
+      background: rgba(148, 163, 184, 0.04);
       border: 1px solid var(--border);
-      padding: 10px 16px;
-      border-radius: 8px;
-      font-weight: 600;
+      border-radius: 12px;
+      padding: 14px 12px;
       cursor: pointer;
-      font-size: 14px;
+      transition: transform 0.12s ease, border-color 0.12s ease;
+      min-height: 133px;
     }
-    button.active-red { background: rgba(239, 68, 68, 0.2); border-color: var(--red); color: #fecaca; }
-    button.active-green { background: rgba(34, 197, 94, 0.2); border-color: var(--green); color: #bbf7d0; }
-    .sim-grid {
+
+    .workflow-card:hover, .workflow-card.active {
+      transform: translateY(-2px);
+      border-color: rgba(103, 210, 255, 0.45);
+      background: rgba(103, 210, 255, 0.04);
+    }
+
+    .workflow-stage {
+      display: block;
+      color: var(--blue);
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .workflow-title {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .workflow-desc {
+      color: var(--muted);
+      font-size: 0.76rem;
+    }
+
+    .workflow-detail {
+      background: rgba(103, 210, 255, 0.04);
+      border: 1px solid rgba(103, 210, 255, 0.2);
+      border-radius: 12px;
+      padding: 14px 16px;
+      color: var(--text);
+      font-size: 0.92rem;
+    }
+
+    .workflow-detail strong {
+      color: var(--blue);
+      display: block;
+      margin-bottom: 8px;
+      font-size: 1rem;
+    }
+
+    .metrics-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 16px;
+      grid-template-columns: repeat(4, minmax(180px, 1fr));
+      gap: 12px;
+      margin-top: 18px;
     }
+
     .metric-box {
-      background: #0d1526;
+      background: rgba(148, 163, 184, 0.04);
       border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 14px;
+      border-radius: 12px;
+      padding: 14px 12px;
     }
-    .metric-label { font-size: 12px; color: var(--muted); text-transform: uppercase; }
-    .metric-val { font-size: 24px; font-weight: 800; margin: 6px 0; }
-    .pill-pass { color: var(--green); font-weight: 700; font-size: 13px; }
-    .pill-fail { color: var(--red); font-weight: 700; font-size: 13px; }
-    pre {
-      background: #080e1a;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 14px;
-      overflow-x: auto;
-      font-size: 12.5px;
-      color: #cbd5e1;
-      margin: 14px 0 0;
+
+    .metric-label {
+      color: var(--muted);
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
     }
-    .two-col {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 16px;
+
+    .metric-value {
+      margin-top: 8px;
+      font-weight: 800;
+      font-size: 1.35rem;
+      line-height: 1.2;
+    }
+
+    .metric-value.red { color: #ff9d9d; }
+    .metric-value.green { color: #a8f0cf; }
+
+    @media (max-width: 980px) {
+      .compare-grid { grid-template-columns: 1fr; }
+      .workflow-grid { grid-template-columns: repeat(2, minmax(160px, 1fr)); }
+      .metrics-grid { grid-template-columns: repeat(2, minmax(160px, 1fr)); }
+    }
+
+    @media (max-width: 600px) {
+      body { padding: 18px 12px 40px; }
+      .workflow-grid, .metrics-grid { grid-template-columns: 1fr; }
+      .dashboard { grid-template-columns: 1fr; }
+      .topbar { align-items: flex-start; }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <header>
+  <div class="page">
+    <header class="topbar">
       <div>
-        <span class="badge">HCSC Product Engineering • Intent to Value Architecture</span>
-        <h1>EDRI + Cognitive QE &amp; DevOps Control Plane</h1>
-        <p class="subtitle">Live Blueprint: IBM DayTrader (tWAS &rarr; WebSphere Liberty) with Unknown-Spec EJB Discovery &amp; Two-Key Release Gate</p>
+        <span class="eyebrow">Executive modernization pulse</span>
+        <h1>Intent to Value: DayTrader UI &amp; Liberty Modernization</h1>
+        <p class="subtitle">Legacy tWAS baseline, unguarded AI drift, EDRI enforcement, and the Golden Path that keeps DayTrader stable, compliant, and measurable.</p>
       </div>
-      <div>
-        <a href="https://github.com/sharejoi/edri-daytrader-liberty-demo/actions" target="_blank" style="color: var(--blue); font-weight: 600; text-decoration: none;">
-          View Live GitHub Actions Pipeline &rarr;
-        </a>
-      </div>
+      <a class="actions-link" href="https://github.com/sharejoi/edri-daytrader-liberty-demo/actions" target="_blank" rel="noreferrer">GitHub Actions</a>
     </header>
 
-    <div class="panel">
-      <h2>1. End-to-End Flow: How EDRI Fuels Mac's 5-Stage Cognitive QE Workflow</h2>
-      <p style="color: var(--muted); font-size: 14px; margin-top: -8px;">Click any stage below to see how upstream spec discovery and downstream risk governance connect into Cognitive QE.</p>
-      <div class="grid-5" id="stageCards">
-        <div class="stage-card active" onclick="selectStage(0)">
-          <div class="stage-num">Stage 1 &bull; Box 1.1–1.3</div>
-          <div class="stage-title">User Story &amp; Spec Intake</div>
-          <p class="stage-desc">JIRA Epics + EDRI Discovery Scanner auto-populate NFR Passports before AI writes code.</p>
-        </div>
-        <div class="stage-card" onclick="selectStage(1)">
-          <div class="stage-num">Stage 2 &bull; Box 2.1–2.3</div>
-          <div class="stage-title">Test Case Generator</div>
-          <p class="stage-desc">Qtest derives functional &amp; NFR load/EJB test cases directly from the NFR Passport.</p>
-        </div>
-        <div class="stage-card" onclick="selectStage(2)">
-          <div class="stage-num">Stage 3 &amp; 4 &bull; TDM</div>
-          <div class="stage-title">Script Executor + TDM</div>
-          <p class="stage-desc">Provisions masked data &amp; runs self-healing tests across UI, API, Mainframe &amp; Liberty.</p>
-        </div>
-        <div class="stage-card" onclick="selectStage(3)">
-          <div class="stage-num">Stage 5 &bull; Box 5.1–5.3</div>
-          <div class="stage-title">Two-Key Release Gate</div>
-          <p class="stage-desc">Merges QE metrics (Key 1) with 2.5x Member Exposure &amp; Config Parity (Key 2).</p>
-        </div>
-        <div class="stage-card" onclick="selectStage(4)">
-          <div class="stage-num">Closed Loop &bull; Box 5.4</div>
-          <div class="stage-title">IDP Central Storage</div>
-          <p class="stage-desc">Locks newly discovered failure patterns into Golden Path templates for every future app.</p>
-        </div>
+    <section class="panel">
+      <h2>Release story: four-step value path</h2>
+      <div class="button-row" id="stepButtons">
+        <button class="step-btn active" data-step="1">Step 1: Legacy tWAS Baseline</button>
+        <button class="step-btn step-red" data-step="2">Step 2: Unguarded AI UI Change</button>
+        <button class="step-btn step-red" data-step="3">Step 3: EDRI + Cognitive QE Catch</button>
+        <button class="step-btn step-green" data-step="4">Step 4: Golden Path AI Delivery</button>
       </div>
-      <div id="stageDetail" class="metric-box" style="border-color: var(--blue);"></div>
-    </div>
 
-    <div class="panel">
-      <h2>2. Interactive Simulator: DayTrader (tWAS &rarr; Liberty) Release Gate</h2>
-      <p style="color: var(--muted); font-size: 14px; margin-top: -8px;">Toggle between an unguarded AI migration (missing legacy EJB/pool specs) and an EDRI-governed Golden Path release.</p>
-      <div class="controls">
-        <button id="btnRun2" class="active-red" onclick="renderRun('run2')">Run 2: Unguarded AI Migration (NO-GO)</button>
-        <button id="btnRun3" onclick="renderRun('run3')">Run 3: NFR Passport + Golden Path (GO)</button>
-      </div>
-      <div class="sim-grid" id="simMetrics"></div>
-      <pre id="simJson"></pre>
-    </div>
+      <div class="compare-grid">
+        <div class="browser">
+          <div class="browser-top">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+          </div>
+          <div class="browser-bar">
+            <span>DayTrader</span>
+            <span class="browser-address" id="browserAddress">tradehome.jsp</span>
+          </div>
+          <div class="browser-body">
+            <div class="browser-header">
+              <span id="pageTitle">Trade Home</span>
+              <span class="status-chip" id="statusChip">baseline</span>
+            </div>
 
-    <div class="panel">
-      <h2>3. Solving "The Unknown of the Spec" Across Any HCSC App</h2>
-      <div class="two-col">
-        <div class="metric-box">
-          <div class="metric-label">Upstream Discovery (edri_discover.py)</div>
-          <p style="font-size: 14px; margin: 8px 0 0;">Instead of asking teams to guess hidden constraints from a blank page, EDRI scans legacy Java code (<code>@Stateless</code> EJBs, <code>@TransactionAttribute</code>) and <code>tWAS</code> configs to auto-populate <code>nfr-passport.yaml</code> before SDE Stage 1 starts.</p>
+            <div class="dashboard" id="dashboardCards">
+              <div class="mini-card">
+                <div class="mini-label">p99 latency</div>
+                <div class="mini-value" id="latency">98ms</div>
+              </div>
+              <div class="mini-card">
+                <div class="mini-label">risk score</div>
+                <div class="mini-value" id="riskScore">1.20</div>
+              </div>
+              <div class="mini-card">
+                <div class="mini-label">pool</div>
+                <div class="mini-value" id="poolValue">50</div>
+              </div>
+            </div>
+
+            <div class="product-table">
+              <div class="product-row header">
+                <div>Module</div>
+                <div>Status</div>
+                <div>Notes</div>
+              </div>
+              <div class="product-row">
+                <div>Trade home</div>
+                <div id="row1">stable</div>
+                <div id="row1n">legacy JSP</div>
+              </div>
+              <div class="product-row">
+                <div>EJB session</div>
+                <div id="row2">stable</div>
+                <div id="row2n">container-aware</div>
+              </div>
+              <div class="product-row">
+                <div>Connection pool</div>
+                <div id="row3">max 50</div>
+                <div id="row3n">tWAS baseline</div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="metric-box">
-          <div class="metric-label">Risk-Tiered Archetypes (1.5x vs. 2.5x)</div>
-          <p style="font-size: 14px; margin: 8px 0 0;">Member-facing initiatives (200K+ members, Open Enrollment, legacy modernization migrations) inherit strict EJB, DB2 pool, and <code>AI-007</code> human-override rules automatically—while low-risk internal tools stay lightweight.</p>
+
+        <div class="diff-card">
+          <div class="diff-header">
+            <span>Code diff</span>
+            <span id="diffLabel">legacy baseline</span>
+          </div>
+          <pre id="diffCode"></pre>
         </div>
       </div>
-    </div>
+    </section>
+
+    <section class="panel">
+      <h2>Cognitive QE workflow explorer</h2>
+      <div class="workflow-grid" id="workflowGrid">
+        <div class="workflow-card active" data-stage="1">
+          <span class="workflow-stage">1.1–1.3</span>
+          <div class="workflow-title">Spec intake</div>
+          <div class="workflow-desc">Discovery, stories, and NFR criteria before code generation.</div>
+        </div>
+        <div class="workflow-card" data-stage="2">
+          <span class="workflow-stage">2.1–2.3</span>
+          <div class="workflow-title">Test case design</div>
+          <div class="workflow-desc">Qe logic turns constraints into concurrent UI and API scenarios.</div>
+        </div>
+        <div class="workflow-card" data-stage="3">
+          <span class="workflow-stage">3 &amp; 4</span>
+          <div class="workflow-title">TDM</div>
+          <div class="workflow-desc">Masked data, execution, and root-cause signal capture.</div>
+        </div>
+        <div class="workflow-card" data-stage="4">
+          <span class="workflow-stage">5.1–5.3</span>
+          <div class="workflow-title">Two-key gate</div>
+          <div class="workflow-desc">QE evidence and config parity are evaluated together.</div>
+        </div>
+        <div class="workflow-card" data-stage="5">
+          <span class="workflow-stage">5.4</span>
+          <div class="workflow-title">IDP central storage</div>
+          <div class="workflow-desc">Golden patterns are retained for future delivery.</div>
+        </div>
+      </div>
+      <div class="workflow-detail" id="workflowDetail"></div>
+    </section>
+
+    <section class="panel">
+      <h2>Outcome summary</h2>
+      <p class="panel-copy">The correct target state is to preserve the known-good DayTrader baseline, detect hidden legacy constraints early, and use a structured release gate before AI-generated Liberty changes reach production.</p>
+      <div class="metrics-grid">
+        <div class="metric-box">
+          <div class="metric-label">Legacy baseline</div>
+          <div class="metric-value red">tradehome.jsp</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-label">Hidden defect</div>
+          <div class="metric-value red">EJBTransactionRolledbackException</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-label">EDRI gate</div>
+          <div class="metric-value red">7.80 RED NO-GO</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-label">Golden path</div>
+          <div class="metric-value green">2.50 GREEN GO • 142ms p99</div>
+        </div>
+      </div>
+    </section>
   </div>
 
   <script>
-    const stages = [
-      {
-        title: "Stage 1 (Box 1.1–1.3): Solving 'The Unknown of the Spec' Before Coding Starts",
-        body: "EDRI's upstream discovery scanner mines legacy tWAS resources.xml and DayTrader's Stateless Session EJBs (TradeSLSBBean) to pre-populate nfr-passport.yaml. When JIRA Epics enter Box 1.1, the User Story Generator (1.2) produces complete functional AND non-functional Acceptance Criteria—eliminating blind spots before an AI agent writes a single line of code."
-      },
-      {
-        title: "Stage 2 (Box 2.1–2.3): Non-Functional Test Case Generation in Qtest",
-        body: "Because Stage 1.3 User Stories now embed explicit NFR thresholds (maxPoolSize=50, EJB transaction parity, p99 < 250ms), Cognitive QE's Test Case Generator (2.2) automatically generates concurrency, connection-exhaustion, and failover test scenarios in Qtest alongside standard UI/API checks."
-      },
-      {
-        title: "Stage 3 & 4 (Box 3.1–3.3 & TDM): Parallel Execution + Root-Cause Insight",
-        body: "The Test Data Agent (TDM) provisions synthetic burst-load datasets (500+ concurrent trades), while the Test Script Executor (3.2) runs self-healing suites across Web UI, API, Mainframe, Salesforce, and Liberty. When a failure occurs, the Test Result Insight Agent (3.3) isolates whether the root cause is an EJB container lock or functional defect."
-      },
-      {
-        title: "Stage 5 (Box 5.1–5.3): Two-Key Policy-as-Code Release Gate",
-        body: "Cognitive QE emits Stage 5.3 telemetry (94.5% critical-path coverage, 142ms p99 latency, DIHI=88). EDRI's deterministic evaluator combines Key 1 (QE evidence) with Key 2 (server.xml config parity + 2.5x member-exposure multiplier) to block risky builds (Score >= 7.5) or clear verified releases in Cognitive DevOps."
-      },
-      {
-        title: "Continuous Loop (Box 5.4): Institutionalizing Memory in IDP Central Storage",
-        body: "Every newly discovered failure pattern (like a missing Liberty EJB feature or DB2 pool ceiling) is automatically committed back into IDP Central Storage as a versioned Golden Path Template—ensuring Apps #2 through #200 inherit the fix on day one."
-      }
-    ];
+    const stepData = {
+      1: {
+        browserAddress: 'tradehome.jsp',
+        pageTitle: 'Trade Home',
+        status: 'baseline',
+        statusClass: 'status-amber',
+        latency: '98ms',
+        riskScore: '1.20',
+        poolValue: '50',
+        row1: 'stable',
+        row1n: 'legacy JSP',
+        row2: 'stable',
+        row2n: 'container-aware',
+        row3: 'max 50',
+        row3n: 'tWAS baseline',
+        diffLabel: 'legacy baseline',
+        diff: `<span class="token-muted">&lt;resources.jdbc:JDBCProvider name="DB2 Universal JDBC Driver Provider"&gt;</span>
+  <span class="token-blue">&lt;factories name="DayTraderDataSource" jndiName="jdbc/TradeDataSource"&gt;</span>
+    <span class="token-green">&lt;connectionPool maxConnections="50" minConnections="10" connectionTimeout="180"/&gt;</span>
+  <span class="token-blue">&lt;/factories&gt;</span>
+<span class="token-muted">&lt;/resources.jdbc:JDBCProvider&gt;</span>
 
-    function selectStage(idx) {
-      document.querySelectorAll('.stage-card').forEach((el, i) => {
-        el.classList.toggle('active', i === idx);
-      });
-      const s = stages[idx];
-      document.getElementById('stageDetail').innerHTML =
-        `<strong style="color: var(--blue); font-size: 15px;">${s.title}</strong><p style="margin: 8px 0 0; font-size: 14px; color: var(--text);">${s.body}</p>`;
-    }
-
-    const runs = {
-      run2: {
-        decision: "NO-GO (BLOCKED)",
-        score: "7.80 / 12.5 (RED)",
-        pool: "FAILED (Missing maxPoolSize=50)",
-        ejb: "FAILED (Missing enterpriseBeans feature)",
-        json: {
-          key_1_cognitive_qe_evidence: {
-            critical_path_coverage_pct: 82.0,
-            load_test_p99_ms: 1420,
-            dihi_score: 64,
-            load_test_passed: false
-          },
-          key_2_edri_config_and_risk_audit: {
-            db2_connection_pool_50_passed: false,
-            liberty_ejb_feature_passed: false,
-            weighted_signal_score: 3.12,
-            member_exposure_multiplier: 2.5,
-            enterprise_risk_score: 7.8
-          },
-          hard_stops_triggered: [
-            "MISSING_DB2_MAX_POOL_SIZE_50",
-            "MISSING_LIBERTY_EJB_CONTAINER_FEATURE",
-            "ENTERPRISE_SCORE_ABOVE_7_5",
-            "HIGH_MEMBER_EXPOSURE_WITH_RED_SIGNAL"
-          ],
-          cognitive_devops_gate_decision: "NO-GO"
-        }
+<span class="token-muted"># Verified legacy contract</span>
+<span class="token-amber">maxConnections = 50</span>
+<span class="token-amber">EJB session behavior remains coordinated</span>`
       },
-      run3: {
-        decision: "GO (APPROVED)",
-        score: "2.50 / 12.5 (GREEN)",
-        pool: "PASSED (maxPoolSize=50 verified)",
-        ejb: "PASSED (enterpriseBeans verified)",
-        json: {
-          key_1_cognitive_qe_evidence: {
-            critical_path_coverage_pct: 94.5,
-            load_test_p99_ms: 142,
-            dihi_score: 88,
-            load_test_passed: true
-          },
-          key_2_edri_config_and_risk_audit: {
-            db2_connection_pool_50_passed: true,
-            liberty_ejb_feature_passed: true,
-            weighted_signal_score: 1.0,
-            member_exposure_multiplier: 2.5,
-            enterprise_risk_score: 2.5
-          },
-          hard_stops_triggered: [],
-          cognitive_devops_gate_decision: "GO"
-        }
+      2: {
+        browserAddress: 'daytrader/ui?refresh=live',
+        pageTitle: 'Trade Home',
+        status: 'crash',
+        statusClass: 'status-red',
+        latency: '2.1s',
+        riskScore: '9.40',
+        poolValue: '0',
+        row1: 'failed',
+        row1n: 'UI freeze',
+        row2: 'error',
+        row2n: 'EJBTransactionRolledbackException',
+        row3: 'missing',
+        row3n: 'maxPoolSize=50 absent',
+        diffLabel: 'unguarded AI drift',
+        diff: `<span class="token-red">- &lt;featureManager&gt;</span>
+<span class="token-red">-   &lt;feature&gt;enterpriseBeans-4.0&lt;/feature&gt;</span>
+<span class="token-red">- &lt;dataSource .../&gt;</span>
+<span class="token-red">- &lt;connectionManager id="conMgr1" maxPoolSize="100"/&gt;</span>
+
+<span class="token-green">+ &lt;featureManager&gt;</span>
+<span class="token-green">+   &lt;feature&gt;enterpriseBeans-4.0&lt;/feature&gt;</span>
+<span class="token-green">+ &lt;dataSource ...&gt;</span>
+<span class="token-green">+   &lt;connectionManager maxPoolSize="50"/&gt;</span>
+<span class="token-green">+ &lt;/dataSource&gt;</span>
+
+<span class="token-amber">Runtime symptom:</span>
+<span class="token-amber">EJBTransactionRolledbackException</span>
+<span class="token-amber">Legacy contract mismatch: missing maxPoolSize=50</span>`
+      },
+      3: {
+        browserAddress: 'daytrader/ui?gate=edri-qe',
+        pageTitle: 'Gate Review',
+        status: 'red no-go',
+        statusClass: 'status-red',
+        latency: '1.6s',
+        riskScore: '7.80',
+        poolValue: 'FAIL',
+        row1: 'blocked',
+        row1n: 'critical path at risk',
+        row2: 'locked',
+        row2n: 'EDRI signal caught drift',
+        row3: 'red',
+        row3n: '7.80 RED NO-GO',
+        diffLabel: 'EDRI + Cognitive QE catch',
+        diff: `<span class="token-amber">Cognitive QE result:</span>
+  critical_path_coverage_pct = <span class="token-red">82.0</span>
+  load_test_p99_ms = <span class="token-red">1420</span>
+  dihi_score = <span class="token-red">64</span>
+
+<span class="token-amber">EDRI config parity:</span>
+  db2_connection_pool_50_passed = <span class="token-red">false</span>
+  liberty_ejb_feature_passed = <span class="token-red">false</span>
+  weighted_signal_score = <span class="token-red">3.12</span>
+  enterprise_risk_score = <span class="token-red">7.80</span>
+
+<span class="token-red">DECISION: NO-GO</span>
+<span class="token-red">Hard stop triggered: MISSING_DB2_MAX_POOL_SIZE_50</span>`
+      },
+      4: {
+        browserAddress: 'daytrader/ui?gate=golden',
+        pageTitle: 'Trade Home',
+        status: 'green go',
+        statusClass: 'status-green',
+        latency: '142ms',
+        riskScore: '2.50',
+        poolValue: '50',
+        row1: 'stable',
+        row1n: 'golden path active',
+        row2: 'healthy',
+        row2n: 'enterpriseBeans verified',
+        row3: 'pass',
+        row3n: '2.50 GREEN GO',
+        diffLabel: 'golden path AI delivery',
+        diff: `<span class="token-green">&lt;featureManager&gt;</span>
+  <span class="token-green">&lt;feature&gt;enterpriseBeans-4.0&lt;/feature&gt;</span>
+<span class="token-green">&lt;/featureManager&gt;</span>
+
+<span class="token-green">&lt;dataSource ...&gt;</span>
+  <span class="token-green">&lt;connectionManager maxPoolSize="50"/&gt;</span>
+<span class="token-green">&lt;/dataSource&gt;</span>
+
+<span class="token-amber">Key outcome:</span>
+  p99 latency = <span class="token-green">142ms</span>
+  enterprise_risk_score = <span class="token-green">2.50</span>
+  decision = <span class="token-green">GREEN GO</span>`
       }
     };
 
-    function renderRun(key) {
-      const r = runs[key];
-      const isGo = key === 'run3';
-      document.getElementById('btnRun2').className = !isGo ? 'active-red' : '';
-      document.getElementById('btnRun3').className = isGo ? 'active-green' : '';
-      const cls = isGo ? 'pill-pass' : 'pill-fail';
-      document.getElementById('simMetrics').innerHTML = `
-        <div class="metric-box"><div class="metric-label">Cognitive DevOps Gate</div><div class="metric-val ${cls}">${r.decision}</div></div>
-        <div class="metric-box"><div class="metric-label">Enterprise Risk Score (2.5x)</div><div class="metric-val ${cls}">${r.score}</div></div>
-        <div class="metric-box"><div class="metric-label">DB2 Pool NFR Check</div><div class="metric-val ${cls}" style="font-size:15px;">${r.pool}</div></div>
-        <div class="metric-box"><div class="metric-label">Liberty EJB Parity Check</div><div class="metric-val ${cls}" style="font-size:15px;">${r.ejb}</div></div>
-      `;
-      document.getElementById('simJson').textContent = JSON.stringify(r.json, null, 2);
+    function renderStep(step) {
+      const s = stepData[step];
+      const status = document.getElementById('statusChip');
+      const browserAddress = document.getElementById('browserAddress');
+      const pageTitle = document.getElementById('pageTitle');
+      const diffLabel = document.getElementById('diffLabel');
+      const diffCode = document.getElementById('diffCode');
+
+      document.querySelectorAll('.step-btn').forEach((btn) => {
+        btn.classList.toggle('active', Number(btn.dataset.step) === step);
+      });
+
+      document.getElementById('latency').textContent = s.latency;
+      document.getElementById('riskScore').textContent = s.riskScore;
+      document.getElementById('poolValue').textContent = s.poolValue;
+      document.getElementById('row1').textContent = s.row1;
+      document.getElementById('row1n').textContent = s.row1n;
+      document.getElementById('row2').textContent = s.row2;
+      document.getElementById('row2n').textContent = s.row2n;
+      document.getElementById('row3').textContent = s.row3;
+      document.getElementById('row3n').textContent = s.row3n;
+
+      browserAddress.textContent = s.browserAddress;
+      pageTitle.textContent = s.pageTitle;
+      status.textContent = s.status;
+      status.className = 'status-chip ' + s.statusClass;
+      diffLabel.textContent = s.diffLabel;
+      diffCode.innerHTML = s.diff;
     }
 
-    selectStage(0);
-    renderRun('run2');
+    document.getElementById('stepButtons').addEventListener('click', (event) => {
+      const btn = event.target.closest('.step-btn');
+      if (!btn) return;
+      renderStep(Number(btn.dataset.step));
+    });
+
+    const workflowStages = {
+      1: {
+        title: '1.1–1.3 • Spec intake and discovery',
+        body: 'EDRI inspects the legacy DayTrader tWAS app, extracts the pool and EJB contract surprises, and feeds them into requirement and NFR capture before AI implementation begins.'
+      },
+      2: {
+        title: '2.1–2.3 • Test case design',
+        body: 'Cognitive QE translates the discovered constraints into a test matrix covering concurrency, connection exhaustion, failover, and storefront reliability conditions.'
+      },
+      3: {
+        title: '3 & 4 • TDM and execution',
+        body: 'Masked data, workload simulation, and root-cause tracing isolate whether the issue is UI logic, container behavior, or configuration drift from the legacy app.'
+      },
+      4: {
+        title: '5.1–5.3 • Two-key release gate',
+        body: 'The gate combines QE evidence with config parity and risk weighting. A critical-path failure or misconfigured Liberty feature remains a hard stop.'
+      },
+      5: {
+        title: '5.4 • IDP central storage',
+        body: 'Once a drift pattern is caught, it becomes a reusable golden-path pattern in central storage so future migrations inherit the fix without re-discovery.'
+      }
+    };
+
+    function renderWorkflow(stage) {
+      const detail = document.getElementById('workflowDetail');
+      const card = workflowStages[stage];
+      detail.innerHTML = `<strong>${card.title}</strong>${card.body}`;
+      document.querySelectorAll('.workflow-card').forEach((el) => {
+        el.classList.toggle('active', Number(el.dataset.stage) === stage);
+      });
+    }
+
+    document.getElementById('workflowGrid').addEventListener('click', (event) => {
+      const card = event.target.closest('.workflow-card');
+      if (!card) return;
+      renderWorkflow(Number(card.dataset.stage));
+    });
+
+    renderStep(1);
+    renderWorkflow(1);
   </script>
 </body>
 </html>
