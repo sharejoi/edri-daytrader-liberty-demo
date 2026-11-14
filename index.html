@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Intent to Value | EDRI + Cognitive QE & DevOps</title>
+  <style>
+    :root {
+      --bg: #0b1220;
+      --card: #121b2e;
+      --border: #24324d;
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --blue: #38bdf8;
+      --green: #22c55e;
+      --red: #ef4444;
+      --amber: #f59e0b;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+    .container { max-width: 1120px; margin: 0 auto; padding: 32px 20px 64px; }
+    header {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+      margin-bottom: 28px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--blue);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+    }
+    h1 { margin: 8px 0 4px; font-size: 28px; }
+    .subtitle { color: var(--muted); margin: 0; font-size: 15px; }
+    .grid-5 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+    .stage-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      cursor: pointer;
+      transition: border-color 0.2s, transform 0.15s;
+    }
+    .stage-card:hover, .stage-card.active {
+      border-color: var(--blue);
+      transform: translateY(-2px);
+    }
+    .stage-num { font-size: 12px; font-weight: 700; color: var(--blue); text-transform: uppercase; }
+    .stage-title { font-size: 16px; font-weight: 700; margin: 4px 0 6px; }
+    .stage-desc { font-size: 13px; color: var(--muted); margin: 0; }
+    .panel {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 22px;
+      margin-bottom: 24px;
+    }
+    .panel h2 { margin-top: 0; font-size: 19px; }
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    button {
+      background: #1e293b;
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    button.active-red { background: rgba(239, 68, 68, 0.2); border-color: var(--red); color: #fecaca; }
+    button.active-green { background: rgba(34, 197, 94, 0.2); border-color: var(--green); color: #bbf7d0; }
+    .sim-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+    }
+    .metric-box {
+      background: #0d1526;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px;
+    }
+    .metric-label { font-size: 12px; color: var(--muted); text-transform: uppercase; }
+    .metric-val { font-size: 24px; font-weight: 800; margin: 6px 0; }
+    .pill-pass { color: var(--green); font-weight: 700; font-size: 13px; }
+    .pill-fail { color: var(--red); font-weight: 700; font-size: 13px; }
+    pre {
+      background: #080e1a;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px;
+      overflow-x: auto;
+      font-size: 12.5px;
+      color: #cbd5e1;
+      margin: 14px 0 0;
+    }
+    .two-col {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div>
+        <span class="badge">HCSC Product Engineering • Intent to Value Architecture</span>
+        <h1>EDRI + Cognitive QE &amp; DevOps Control Plane</h1>
+        <p class="subtitle">Live Blueprint: IBM DayTrader (tWAS &rarr; WebSphere Liberty) with Unknown-Spec EJB Discovery &amp; Two-Key Release Gate</p>
+      </div>
+      <div>
+        <a href="https://github.com/sharejoi/edri-daytrader-liberty-demo/actions" target="_blank" style="color: var(--blue); font-weight: 600; text-decoration: none;">
+          View Live GitHub Actions Pipeline &rarr;
+        </a>
+      </div>
+    </header>
+
+    <div class="panel">
+      <h2>1. End-to-End Flow: How EDRI Fuels Mac's 5-Stage Cognitive QE Workflow</h2>
+      <p style="color: var(--muted); font-size: 14px; margin-top: -8px;">Click any stage below to see how upstream spec discovery and downstream risk governance connect into Cognitive QE.</p>
+      <div class="grid-5" id="stageCards">
+        <div class="stage-card active" onclick="selectStage(0)">
+          <div class="stage-num">Stage 1 &bull; Box 1.1–1.3</div>
+          <div class="stage-title">User Story &amp; Spec Intake</div>
+          <p class="stage-desc">JIRA Epics + EDRI Discovery Scanner auto-populate NFR Passports before AI writes code.</p>
+        </div>
+        <div class="stage-card" onclick="selectStage(1)">
+          <div class="stage-num">Stage 2 &bull; Box 2.1–2.3</div>
+          <div class="stage-title">Test Case Generator</div>
+          <p class="stage-desc">Qtest derives functional &amp; NFR load/EJB test cases directly from the NFR Passport.</p>
+        </div>
+        <div class="stage-card" onclick="selectStage(2)">
+          <div class="stage-num">Stage 3 &amp; 4 &bull; TDM</div>
+          <div class="stage-title">Script Executor + TDM</div>
+          <p class="stage-desc">Provisions masked data &amp; runs self-healing tests across UI, API, Mainframe &amp; Liberty.</p>
+        </div>
+        <div class="stage-card" onclick="selectStage(3)">
+          <div class="stage-num">Stage 5 &bull; Box 5.1–5.3</div>
+          <div class="stage-title">Two-Key Release Gate</div>
+          <p class="stage-desc">Merges QE metrics (Key 1) with 2.5x Member Exposure &amp; Config Parity (Key 2).</p>
+        </div>
+        <div class="stage-card" onclick="selectStage(4)">
+          <div class="stage-num">Closed Loop &bull; Box 5.4</div>
+          <div class="stage-title">IDP Central Storage</div>
+          <p class="stage-desc">Locks newly discovered failure patterns into Golden Path templates for every future app.</p>
+        </div>
+      </div>
+      <div id="stageDetail" class="metric-box" style="border-color: var(--blue);"></div>
+    </div>
+
+    <div class="panel">
+      <h2>2. Interactive Simulator: DayTrader (tWAS &rarr; Liberty) Release Gate</h2>
+      <p style="color: var(--muted); font-size: 14px; margin-top: -8px;">Toggle between an unguarded AI migration (missing legacy EJB/pool specs) and an EDRI-governed Golden Path release.</p>
+      <div class="controls">
+        <button id="btnRun2" class="active-red" onclick="renderRun('run2')">Run 2: Unguarded AI Migration (NO-GO)</button>
+        <button id="btnRun3" onclick="renderRun('run3')">Run 3: NFR Passport + Golden Path (GO)</button>
+      </div>
+      <div class="sim-grid" id="simMetrics"></div>
+      <pre id="simJson"></pre>
+    </div>
+
+    <div class="panel">
+      <h2>3. Solving "The Unknown of the Spec" Across Any HCSC App</h2>
+      <div class="two-col">
+        <div class="metric-box">
+          <div class="metric-label">Upstream Discovery (edri_discover.py)</div>
+          <p style="font-size: 14px; margin: 8px 0 0;">Instead of asking teams to guess hidden constraints from a blank page, EDRI scans legacy Java code (<code>@Stateless</code> EJBs, <code>@TransactionAttribute</code>) and <code>tWAS</code> configs to auto-populate <code>nfr-passport.yaml</code> before SDE Stage 1 starts.</p>
+        </div>
+        <div class="metric-box">
+          <div class="metric-label">Risk-Tiered Archetypes (1.5x vs. 2.5x)</div>
+          <p style="font-size: 14px; margin: 8px 0 0;">Member-facing initiatives (200K+ members, Open Enrollment, ARO/Cigna migrations) inherit strict EJB, DB2 pool, and <code>AI-007</code> human-override rules automatically—while low-risk internal tools stay lightweight.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const stages = [
+      {
+        title: "Stage 1 (Box 1.1–1.3): Solving 'The Unknown of the Spec' Before Coding Starts",
+        body: "EDRI's upstream discovery scanner mines legacy tWAS resources.xml and DayTrader's Stateless Session EJBs (TradeSLSBBean) to pre-populate nfr-passport.yaml. When JIRA Epics enter Box 1.1, the User Story Generator (1.2) produces complete functional AND non-functional Acceptance Criteria—eliminating blind spots before an AI agent writes a single line of code."
+      },
+      {
+        title: "Stage 2 (Box 2.1–2.3): Non-Functional Test Case Generation in Qtest",
+        body: "Because Stage 1.3 User Stories now embed explicit NFR thresholds (maxPoolSize=50, EJB transaction parity, p99 < 250ms), Cognitive QE's Test Case Generator (2.2) automatically generates concurrency, connection-exhaustion, and failover test scenarios in Qtest alongside standard UI/API checks."
+      },
+      {
+        title: "Stage 3 & 4 (Box 3.1–3.3 & TDM): Parallel Execution + Root-Cause Insight",
+        body: "The Test Data Agent (TDM) provisions synthetic burst-load datasets (500+ concurrent trades), while the Test Script Executor (3.2) runs self-healing suites across Web UI, API, Mainframe, Salesforce, and Liberty. When a failure occurs, the Test Result Insight Agent (3.3) isolates whether the root cause is an EJB container lock or functional defect."
+      },
+      {
+        title: "Stage 5 (Box 5.1–5.3): Two-Key Policy-as-Code Release Gate",
+        body: "Cognitive QE emits Stage 5.3 telemetry (94.5% critical-path coverage, 142ms p99 latency, DIHI=88). EDRI's deterministic evaluator combines Key 1 (QE evidence) with Key 2 (server.xml config parity + 2.5x member-exposure multiplier) to block risky builds (Score >= 7.5) or clear verified releases in Cognitive DevOps."
+      },
+      {
+        title: "Continuous Loop (Box 5.4): Institutionalizing Memory in IDP Central Storage",
+        body: "Every newly discovered failure pattern (like a missing Liberty EJB feature or DB2 pool ceiling) is automatically committed back into IDP Central Storage as a versioned Golden Path Template—ensuring Apps #2 through #200 inherit the fix on day one."
+      }
+    ];
+
+    function selectStage(idx) {
+      document.querySelectorAll('.stage-card').forEach((el, i) => {
+        el.classList.toggle('active', i === idx);
+      });
+      const s = stages[idx];
+      document.getElementById('stageDetail').innerHTML =
+        `<strong style="color: var(--blue); font-size: 15px;">${s.title}</strong><p style="margin: 8px 0 0; font-size: 14px; color: var(--text);">${s.body}</p>`;
+    }
+
+    const runs = {
+      run2: {
+        decision: "NO-GO (BLOCKED)",
+        score: "7.80 / 12.5 (RED)",
+        pool: "FAILED (Missing maxPoolSize=50)",
+        ejb: "FAILED (Missing enterpriseBeans feature)",
+        json: {
+          key_1_cognitive_qe_evidence: {
+            critical_path_coverage_pct: 82.0,
+            load_test_p99_ms: 1420,
+            dihi_score: 64,
+            load_test_passed: false
+          },
+          key_2_edri_config_and_risk_audit: {
+            db2_connection_pool_50_passed: false,
+            liberty_ejb_feature_passed: false,
+            weighted_signal_score: 3.12,
+            member_exposure_multiplier: 2.5,
+            enterprise_risk_score: 7.8
+          },
+          hard_stops_triggered: [
+            "MISSING_DB2_MAX_POOL_SIZE_50",
+            "MISSING_LIBERTY_EJB_CONTAINER_FEATURE",
+            "ENTERPRISE_SCORE_ABOVE_7_5",
+            "HIGH_MEMBER_EXPOSURE_WITH_RED_SIGNAL"
+          ],
+          cognitive_devops_gate_decision: "NO-GO"
+        }
+      },
+      run3: {
+        decision: "GO (APPROVED)",
+        score: "2.50 / 12.5 (GREEN)",
+        pool: "PASSED (maxPoolSize=50 verified)",
+        ejb: "PASSED (enterpriseBeans verified)",
+        json: {
+          key_1_cognitive_qe_evidence: {
+            critical_path_coverage_pct: 94.5,
+            load_test_p99_ms: 142,
+            dihi_score: 88,
+            load_test_passed: true
+          },
+          key_2_edri_config_and_risk_audit: {
+            db2_connection_pool_50_passed: true,
+            liberty_ejb_feature_passed: true,
+            weighted_signal_score: 1.0,
+            member_exposure_multiplier: 2.5,
+            enterprise_risk_score: 2.5
+          },
+          hard_stops_triggered: [],
+          cognitive_devops_gate_decision: "GO"
+        }
+      }
+    };
+
+    function renderRun(key) {
+      const r = runs[key];
+      const isGo = key === 'run3';
+      document.getElementById('btnRun2').className = !isGo ? 'active-red' : '';
+      document.getElementById('btnRun3').className = isGo ? 'active-green' : '';
+      const cls = isGo ? 'pill-pass' : 'pill-fail';
+      document.getElementById('simMetrics').innerHTML = `
+        <div class="metric-box"><div class="metric-label">Cognitive DevOps Gate</div><div class="metric-val ${cls}">${r.decision}</div></div>
+        <div class="metric-box"><div class="metric-label">Enterprise Risk Score (2.5x)</div><div class="metric-val ${cls}">${r.score}</div></div>
+        <div class="metric-box"><div class="metric-label">DB2 Pool NFR Check</div><div class="metric-val ${cls}" style="font-size:15px;">${r.pool}</div></div>
+        <div class="metric-box"><div class="metric-label">Liberty EJB Parity Check</div><div class="metric-val ${cls}" style="font-size:15px;">${r.ejb}</div></div>
+      `;
+      document.getElementById('simJson').textContent = JSON.stringify(r.json, null, 2);
+    }
+
+    selectStage(0);
+    renderRun('run2');
+  </script>
+</body>
+</html>
