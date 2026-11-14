@@ -14,17 +14,19 @@ WEIGHTS = {
     "capability_leverage": 0.03,
 }
 
-# Inspect the actual Liberty server.xml in the repo for the NFR Passport rule
 server_xml_path = "daytrader-app/src/main/liberty/config/server.xml"
-nfr_compliant = False
+pool_ok = False
+ejb_ok = False
+
 if os.path.exists(server_xml_path):
     with open(server_xml_path, "r", encoding="utf-8") as f:
         content = f.read()
-        if 'maxPoolSize="50"' in content:
-            nfr_compliant = True
+        pool_ok = 'maxPoolSize="50"' in content
+        ejb_ok = ("enterpriseBeans" in content) or ("ejbLite" in content)
+
+nfr_compliant = pool_ok and ejb_ok
 
 if not nfr_compliant:
-    # RUN 2: Missing tWAS maxPoolSize="50" causes burst failure -> EDRI catches it
     signals = {
         "DIHI": 2,
         "product_readiness": 4,
@@ -38,7 +40,6 @@ if not nfr_compliant:
     }
     critical_path_pct = 82.0
 else:
-    # RUN 3: Remediated via Liberty Golden Path Template
     signals = {k: 1 for k in WEIGHTS}
     critical_path_pct = 98.0
 
@@ -48,6 +49,10 @@ weighted_score = round(sum(signals[k] * WEIGHTS[k] for k in WEIGHTS), 2)
 enterprise_score = round(weighted_score * multiplier, 2)
 
 hard_stops = []
+if not pool_ok:
+    hard_stops.append("MISSING_DB2_MAX_POOL_SIZE_50")
+if not ejb_ok:
+    hard_stops.append("MISSING_LIBERTY_EJB_CONTAINER_FEATURE")
 if enterprise_score >= 7.5:
     hard_stops.append("ENTERPRISE_SCORE_ABOVE_7_5")
 if signals["product_readiness"] >= 4:
@@ -60,7 +65,10 @@ if members > 100000 and any(v >= 4 for v in signals.values()):
 decision = "NO-GO" if hard_stops else "GO"
 
 report = {
-    "nfr_passport_pool_check_passed": nfr_compliant,
+    "nfr_checks": {
+        "db2_connection_pool_50_passed": pool_ok,
+        "liberty_ejb_feature_passed": ejb_ok,
+    },
     "weighted_signal_score": weighted_score,
     "enterprise_risk_score": enterprise_score,
     "risk_tier": "RED" if hard_stops else "GREEN",
@@ -72,7 +80,7 @@ print("=== EDRI POLICY-AS-CODE RELEASE GATE REPORT ===")
 print(json.dumps(report, indent=2))
 
 if decision == "NO-GO":
-    print("\n[BLOCKED] EDRI halted Cognitive DevOps deployment due to NFR Passport violations.")
+    print("\n[BLOCKED] EDRI halted Cognitive DevOps deployment due to discovered NFR violations.")
     sys.exit(1)
 else:
     print("\n[APPROVED] EDRI cleared release for Cognitive DevOps promotion.")
