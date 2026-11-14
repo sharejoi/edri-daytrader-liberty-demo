@@ -1,0 +1,6 @@
+<!-- Legacy Traditional WebSphere (tWAS) Configuration -->
+<resources.jdbc:JDBCProvider name="DB2 Universal JDBC Driver Provider">
+  <factories name="DayTraderDataSource" jndiName="jdbc/TradeDataSource">
+    <connectionPool maxConnections="50" minConnections="10" connectionTimeout="180"/>
+  </factories>
+</resources.jdbc:JDBCProvider>
