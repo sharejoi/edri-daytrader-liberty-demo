@@ -1,4 +1,4 @@
-name: Cognitive DevOps + EDRI Release Gate
+name: Multi-Agent AI Delivery Pipeline (tWAS -> WebSphere Liberty)
 
 on:
   push:
@@ -7,16 +7,75 @@ on:
     branches: [ "main" ]
 
 jobs:
-  edri-release-evaluator:
+  agent-1-spec-discovery:
+    name: "Agent 1: Spec & EJB Discovery Agent"
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Code & NFR Passport from Registry
+      - name: Checkout Legacy & Target Repo
         uses: actions/checkout@v4
-
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+      - name: Mine Legacy EJBs & tWAS Pools into NFR Passport
+        run: python edri/evaluator/edri_discover.py
+      - name: Publish NFR Passport to Agent Bus
+        uses: actions/upload-artifact@v4
+        with:
+          name: nfr-passport-contract
+          path: edri/specs/nfr-passport.yaml
 
-      - name: Run EDRI Policy-as-Code Evaluator Gate
+  agent-2-cognitive-qe:
+    name: "Agent 2: Cognitive QE Build & Test Agent"
+    needs: agent-1-spec-discovery
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout AI-Migrated Liberty Code
+        uses: actions/checkout@v4
+      - name: Download NFR Passport Contract
+        uses: actions/download-artifact@v4
+        with:
+          name: nfr-passport-contract
+          path: edri/specs/
+      - name: Set up Java 17 & Maven
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: 'maven'
+      - name: Compile Migrated Java/EJBs & Execute Tests
+        working-directory: daytrader-app
+        run: mvn test-compile test -B
+
+  agent-3-edri-release-deploy:
+    name: "Agent 3: EDRI Governance & Deploy Agent"
+    needs: [agent-1-spec-discovery, agent-2-cognitive-qe]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo & Evidence
+        uses: actions/checkout@v4
+      - name: Download NFR Passport Contract
+        uses: actions/download-artifact@v4
+        with:
+          name: nfr-passport-contract
+          path: edri/specs/
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Execute Two-Key Release Gate (QE Evidence + 2.5x Risk)
         run: python edri/evaluator/edri_gate.py
+      - name: Set up Java 17 for Liberty Packaging
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: 'maven'
+      - name: Package & Stage Verified Liberty Release Artifact
+        working-directory: daytrader-app
+        run: mvn package -DskipTests -B
+      - name: Publish Deployable Liberty Package
+        uses: actions/upload-artifact@v4
+        with:
+          name: daytrader-liberty-deploy-package
+          path: daytrader-app/**/target/*.war
