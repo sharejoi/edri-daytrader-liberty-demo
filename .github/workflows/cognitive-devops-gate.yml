@@ -1,0 +1,22 @@
+name: Cognitive DevOps + EDRI Release Gate
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  edri-release-evaluator:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code & NFR Passport from Registry
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run EDRI Policy-as-Code Evaluator Gate
+        run: python edri/evaluator/edri_gate.py

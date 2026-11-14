@@ -1,0 +1,12 @@
+product_name: "DayTrader Liberty Migration"
+initiative: "ARO / App Modernization Pilot"
+risk_multiplier: 2.5
+members_at_risk: 200000
+nfr_thresholds:
+  min_db2_pool_size: 50
+  min_http_header_kb: 16
+  critical_path_pass_pct: 90.0
+ai_governance:
+  ai_involved: true
+  AI_007_human_override: true
+  AI_008_governance_approved: true
