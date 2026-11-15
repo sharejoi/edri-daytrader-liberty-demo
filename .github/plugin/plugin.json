@@ -1,0 +1,20 @@
+{
+  "$schema": "https://raw.githubusercontent.com/github/copilot-plugins/main/schemas/plugin.schema.json",
+  "name": "edri-was-to-liberty",
+  "version": "1.0.0",
+  "description": "Enterprise Delivery Risk Intelligence (EDRI) governance plugin for tWAS-to-WebSphere Liberty migrations: mines legacy EJBs/connection pools into an NFR Passport and enforces SofIA Two-Key release gates.",
+  "author": "HCSC Product Engineering — EDRI",
+  "keywords": [
+    "edri",
+    "websphere",
+    "liberty",
+    "nfr-passport",
+    "governance"
+  ],
+  "skills": [
+    "../skills/was-to-liberty-edri"
+  ],
+  "agents": [
+    "../agents/edri-guardian.agent.md"
+  ]
+}

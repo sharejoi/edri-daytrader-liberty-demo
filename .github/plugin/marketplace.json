@@ -1,0 +1,14 @@
+{
+  "name": "edri-cognitive-assets",
+  "owner": {
+    "name": "HCSC Product Engineering — EDRI"
+  },
+  "plugins": [
+    {
+      "name": "edri-was-to-liberty",
+      "version": "1.0.0",
+      "description": "EDRI Spec Discovery, NFR Passport guardrails, and Two-Key Release Gate for WebSphere-to-Liberty modernization.",
+      "source": "./"
+    }
+  ]
+}
