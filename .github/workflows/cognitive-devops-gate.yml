@@ -46,9 +46,11 @@ jobs:
         run: |
           python3 -c "
           import xml.etree.ElementTree as ET, glob
-          tree = ET.parse('daytrader-app/daytrader-ee7-wlpcfg/servers/daytrader7Sample/server.xml')
+          xml_files = glob.glob('daytrader-app/**/server.xml', recursive=True)
+          assert len(xml_files) > 0, 'No server.xml found in daytrader-app'
+          tree = ET.parse(xml_files[0])
           java_files = glob.glob('daytrader-app/**/*.java', recursive=True)
-          print(f'Verified valid Liberty server.xml ({tree.getroot().tag}) and {len(java_files)} DayTrader Java source files.')
+          print(f'Verified valid Liberty {xml_files[0]} ({tree.getroot().tag}) and {len(java_files)} DayTrader Java source files.')
           assert len(java_files) > 0, 'No Java source files found'
           "
 
@@ -73,7 +75,7 @@ jobs:
       - name: Package Verified Liberty Server Configuration & NFR Audit Bundle
         run: |
           mkdir -p release-bundle
-          cp daytrader-app/daytrader-ee7-wlpcfg/servers/daytrader7Sample/server.xml release-bundle/
+          find daytrader-app -name "server.xml" -exec cp {} release-bundle/ \;
           cp edri/specs/nfr-passport.yaml release-bundle/
       - name: Publish Deployable Liberty Release Bundle
         uses: actions/upload-artifact@v4
