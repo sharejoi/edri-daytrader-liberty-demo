@@ -3,23 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Intent to Value: DayTrader UI & Liberty Modernization</title>
+  <title>Agentic Delivery Lane: WAS to Liberty Modernization + EDRI Control Plane</title>
   <style>
     :root {
       --bg: #07111d;
-      --bg-2: #0d1728;
-      --panel: #101d2f;
+      --panel: #0f1c2c;
       --panel-strong: #0b1524;
-      --border: #24344d;
-      --text: #e5eefb;
-      --muted: #9bb0cc;
+      --border: #233650;
+      --text: #edf4ff;
+      --muted: #9bb0ca;
       --blue: #67d2ff;
       --cyan: #6ee7f9;
       --green: #35d399;
       --red: #ff6b6b;
       --amber: #f6c453;
-      --violet: #8b5cf6;
-      --shadow: rgba(7, 17, 29, 0.42);
+      --shadow: rgba(7, 17, 29, 0.52);
     }
 
     * { box-sizing: border-box; }
@@ -28,8 +26,8 @@
       margin: 0;
       min-height: 100%;
       background:
-        radial-gradient(circle at top left, rgba(103, 210, 255, 0.12), transparent 26%),
-        radial-gradient(circle at bottom right, rgba(139, 92, 246, 0.12), transparent 28%),
+        radial-gradient(circle at top left, rgba(103, 210, 255, 0.14), transparent 26%),
+        radial-gradient(circle at bottom right, rgba(139, 92, 246, 0.14), transparent 30%),
         var(--bg);
       color: var(--text);
       font-family: Inter, "Segoe UI", sans-serif;
@@ -37,7 +35,7 @@
     }
 
     body {
-      padding: 32px 20px 64px;
+      padding: 28px 18px 52px;
     }
 
     .page {
@@ -47,11 +45,11 @@
 
     .topbar {
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
       gap: 18px;
       border-bottom: 1px solid var(--border);
-      padding-bottom: 22px;
+      padding-bottom: 18px;
       margin-bottom: 24px;
       flex-wrap: wrap;
     }
@@ -59,50 +57,45 @@
     .eyebrow {
       display: inline-block;
       background: rgba(103, 210, 255, 0.12);
+      border: 1px solid rgba(103, 210, 255, 0.38);
       color: var(--blue);
-      border: 1px solid rgba(103, 210, 255, 0.35);
       border-radius: 999px;
       padding: 5px 10px;
-      font-size: 11px;
+      font-size: 10.5px;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      font-weight: 700;
+      font-weight: 800;
     }
 
     h1 {
       margin: 12px 0 4px;
-      font-size: clamp(2rem, 3vw, 3rem);
+      font-size: clamp(2.1rem, 3vw, 3.1rem);
       line-height: 1.1;
-      letter-spacing: -0.04em;
+      letter-spacing: -0.05em;
     }
 
     .subtitle {
       margin: 0;
       color: var(--muted);
-      font-size: 0.98rem;
       max-width: 760px;
+      font-size: 0.96rem;
     }
 
     .actions-link {
+      display: inline-block;
       color: var(--cyan);
       text-decoration: none;
       font-weight: 700;
-      border: 1px solid rgba(110, 231, 249, 0.45);
+      border: 1px solid rgba(110, 231, 249, 0.48);
       background: rgba(110, 231, 249, 0.08);
       border-radius: 10px;
       padding: 10px 14px;
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
-    }
-
-    .actions-link:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 10px 20px rgba(110, 231, 249, 0.12);
     }
 
     .panel {
-      background: linear-gradient(180deg, rgba(16, 29, 47, 1), rgba(11, 21, 36, 1));
+      background: linear-gradient(180deg, rgba(15, 28, 44, 1), rgba(10, 18, 28, 1));
       border: 1px solid var(--border);
-      border-radius: 16px;
+      border-radius: 18px;
       box-shadow: 0 20px 40px var(--shadow);
       padding: 22px;
       margin-bottom: 24px;
@@ -110,52 +103,73 @@
 
     .panel h2 {
       margin: 0 0 10px;
-      font-size: 1.3rem;
+      font-size: 1.25rem;
       letter-spacing: -0.02em;
     }
 
     .panel-copy {
-      margin: 0 0 16px;
+      margin: 0 0 18px;
       color: var(--muted);
       font-size: 0.92rem;
     }
 
-    .button-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 20px;
+    .agent-bar {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(180px, 1fr));
+      gap: 12px;
+      margin-bottom: 18px;
     }
 
-    .step-btn {
-      appearance: none;
+    .agent-card {
+      background: rgba(148, 163, 184, 0.04);
       border: 1px solid var(--border);
-      background: rgba(148, 163, 184, 0.08);
-      color: var(--text);
-      border-radius: 10px;
-      padding: 10px 14px;
-      font-weight: 700;
+      border-radius: 12px;
+      padding: 12px 14px;
+      min-height: 105px;
+      transition: border-color 0.15s, transform 0.15s;
       cursor: pointer;
-      transition: all 0.15s ease;
-      font-size: 0.9rem;
     }
 
-    .step-btn.active {
-      background: rgba(103, 210, 255, 0.12);
+    .agent-card.active {
       border-color: rgba(103, 210, 255, 0.5);
+      background: rgba(103, 210, 255, 0.06);
+      transform: translateY(-1px);
+    }
+
+    .agent-kicker {
+      display: block;
       color: var(--blue);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.68rem;
+      font-weight: 800;
+      margin-bottom: 8px;
     }
 
-    .step-btn.step-red.active {
-      background: rgba(255, 107, 107, 0.12);
-      border-color: rgba(255, 107, 107, 0.5);
-      color: #ffb2b2;
+    .agent-title {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 6px;
     }
 
-    .step-btn.step-green.active {
-      background: rgba(53, 211, 153, 0.12);
-      border-color: rgba(53, 211, 153, 0.5);
-      color: #b8f5d8;
+    .agent-text {
+      color: var(--muted);
+      font-size: 0.76rem;
+    }
+
+    .gov-box {
+      background: rgba(103, 210, 255, 0.04);
+      border: 1px solid rgba(103, 210, 255, 0.18);
+      border-radius: 12px;
+      padding: 14px 16px;
+      color: var(--text);
+      font-size: 0.92rem;
+    }
+
+    .gov-box strong {
+      display: block;
+      color: var(--cyan);
+      margin-bottom: 8px;
     }
 
     .compare-grid {
@@ -165,30 +179,23 @@
     }
 
     .browser {
-      background: #131f2f;
+      background: #111d2d;
       border: 1px solid var(--border);
       border-radius: 14px;
       overflow: hidden;
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02);
     }
 
     .browser-top {
       display: flex;
-      align-items: center;
       gap: 8px;
+      align-items: center;
       height: 38px;
+      padding: 0 14px;
       background: rgba(148, 163, 184, 0.08);
       border-bottom: 1px solid var(--border);
-      padding: 0 14px;
     }
 
-    .dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      display: inline-block;
-    }
-
+    .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
     .dot.red { background: #ff5f57; }
     .dot.yellow { background: #ffbd2e; }
     .dot.green { background: #28c840; }
@@ -197,7 +204,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: #1a2639;
+      background: #1b2940;
       border-bottom: 1px solid var(--border);
       padding: 10px 14px;
       font-size: 0.76rem;
@@ -206,96 +213,101 @@
 
     .browser-address {
       flex: 1;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid var(--border);
-      border-radius: 8px;
       padding: 7px 10px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
       margin-left: 10px;
       color: var(--text);
+      text-align: center;
     }
 
     .browser-body {
       padding: 18px 14px 14px;
-      background: linear-gradient(180deg, #102033 0%, #111d2d 100%);
+      background: linear-gradient(180deg, #112235 0%, #111d2d 100%);
       min-height: 300px;
     }
 
     .browser-header {
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      margin-bottom: 18px;
+      justify-content: space-between;
+      margin-bottom: 16px;
       font-weight: 700;
-      font-size: 0.95rem;
     }
 
-    .status-chip {
+    .status-pill {
       font-size: 0.7rem;
-      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
       border-radius: 999px;
       padding: 5px 8px;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-    }
-
-    .status-red {
-      background: rgba(255, 107, 107, 0.12);
-      color: #ffb2b2;
-      border: 1px solid rgba(255, 107, 107, 0.35);
-    }
-
-    .status-green {
-      background: rgba(53, 211, 153, 0.12);
-      color: #b8f5d8;
-      border: 1px solid rgba(53, 211, 153, 0.35);
+      font-weight: 800;
     }
 
     .status-amber {
       background: rgba(246, 196, 83, 0.12);
       color: #f8d67c;
-      border: 1px solid rgba(246, 196, 83, 0.35);
+      border: 1px solid rgba(246, 196, 83, 0.28);
     }
 
-    .dashboard { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 12px; }
+    .status-red {
+      background: rgba(255, 107, 107, 0.12);
+      color: #ffb2b2;
+      border: 1px solid rgba(255, 107, 107, 0.28);
+    }
+
+    .status-green {
+      background: rgba(53, 211, 153, 0.12);
+      color: #b8f5d8;
+      border: 1px solid rgba(53, 211, 153, 0.28);
+    }
+
+    .mini-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(120px, 1fr));
+      gap: 10px;
+    }
+
     .mini-card {
       background: rgba(148, 163, 184, 0.04);
       border: 1px solid var(--border);
       border-radius: 10px;
-      padding: 12px;
-      min-height: 88px;
+      padding: 10px 12px;
+      min-height: 90px;
     }
 
     .mini-label {
       color: var(--muted);
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       letter-spacing: 0.08em;
       text-transform: uppercase;
     }
 
     .mini-value {
+      margin-top: 8px;
       font-size: 1.5rem;
       font-weight: 800;
-      margin-top: 8px;
     }
 
-    .product-table {
+    .table {
       margin-top: 16px;
-      background: rgba(148, 163, 184, 0.03);
       border: 1px solid var(--border);
+      background: rgba(148, 163, 184, 0.03);
       border-radius: 10px;
       overflow: hidden;
     }
 
-    .product-row {
+    .row {
       display: grid;
-      grid-template-columns: 1.4fr 1fr 1fr;
-      border-bottom: 1px solid var(--border);
+      grid-template-columns: 1.3fr 1fr 1fr;
       padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
       font-size: 0.8rem;
     }
 
-    .product-row:last-child { border-bottom: none; }
-    .product-row.header {
+    .row:last-child { border-bottom: none; }
+    .row.header {
       background: rgba(103, 210, 255, 0.05);
       font-weight: 700;
     }
@@ -311,25 +323,25 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 12px 14px;
-      border-bottom: 1px solid var(--border);
       background: rgba(148, 163, 184, 0.04);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 14px;
       font-size: 0.8rem;
-      text-transform: uppercase;
       letter-spacing: 0.08em;
+      text-transform: uppercase;
       color: var(--muted);
     }
 
     pre {
       margin: 0;
-      padding: 16px 14px 18px;
+      padding: 12px 14px 18px;
+      min-height: 295px;
       background: #070f1a;
       color: #dfeaf9;
       font-size: 0.75rem;
       line-height: 1.55;
       white-space: pre-wrap;
       word-break: break-word;
-      min-height: 295px;
       font-family: "SFMono-Regular", Consolas, monospace;
     }
 
@@ -339,64 +351,42 @@
     .token-blue { color: #9ad9ff; }
     .token-muted { color: #8ea4c4; }
 
-    .workflow-grid {
-      display: grid;
-      grid-template-columns: repeat(5, minmax(160px, 1fr));
-      gap: 12px;
+    .step-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
       margin-bottom: 18px;
     }
 
-    .workflow-card {
-      background: rgba(148, 163, 184, 0.04);
+    .step-btn {
+      appearance: none;
       border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 14px 12px;
-      cursor: pointer;
-      transition: transform 0.12s ease, border-color 0.12s ease;
-      min-height: 133px;
-    }
-
-    .workflow-card:hover, .workflow-card.active {
-      transform: translateY(-2px);
-      border-color: rgba(103, 210, 255, 0.45);
-      background: rgba(103, 210, 255, 0.04);
-    }
-
-    .workflow-stage {
-      display: block;
-      color: var(--blue);
-      font-size: 0.7rem;
-      font-weight: 800;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      margin-bottom: 8px;
-    }
-
-    .workflow-title {
-      font-size: 1rem;
-      font-weight: 700;
-      margin-bottom: 6px;
-    }
-
-    .workflow-desc {
-      color: var(--muted);
-      font-size: 0.76rem;
-    }
-
-    .workflow-detail {
-      background: rgba(103, 210, 255, 0.04);
-      border: 1px solid rgba(103, 210, 255, 0.2);
-      border-radius: 12px;
-      padding: 14px 16px;
+      border-radius: 10px;
+      background: rgba(148, 163, 184, 0.06);
       color: var(--text);
-      font-size: 0.92rem;
+      padding: 10px 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      font-size: 0.9rem;
     }
 
-    .workflow-detail strong {
+    .step-btn.active {
+      background: rgba(103, 210, 255, 0.12);
+      border-color: rgba(103, 210, 255, 0.45);
       color: var(--blue);
-      display: block;
-      margin-bottom: 8px;
-      font-size: 1rem;
+    }
+
+    .step-btn.red.active {
+      background: rgba(255, 107, 107, 0.12);
+      border-color: rgba(255, 107, 107, 0.45);
+      color: #ffb2b2;
+    }
+
+    .step-btn.green.active {
+      background: rgba(53, 211, 153, 0.12);
+      border-color: rgba(53, 211, 153, 0.45);
+      color: #b8f5d8;
     }
 
     .metrics-grid {
@@ -415,7 +405,7 @@
 
     .metric-label {
       color: var(--muted);
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       letter-spacing: 0.08em;
       text-transform: uppercase;
     }
@@ -423,8 +413,8 @@
     .metric-value {
       margin-top: 8px;
       font-weight: 800;
-      font-size: 1.35rem;
-      line-height: 1.2;
+      font-size: 1.2rem;
+      line-height: 1.3;
     }
 
     .metric-value.red { color: #ff9d9d; }
@@ -432,15 +422,14 @@
 
     @media (max-width: 980px) {
       .compare-grid { grid-template-columns: 1fr; }
-      .workflow-grid { grid-template-columns: repeat(2, minmax(160px, 1fr)); }
+      .agent-bar { grid-template-columns: repeat(2, minmax(180px, 1fr)); }
       .metrics-grid { grid-template-columns: repeat(2, minmax(160px, 1fr)); }
     }
 
     @media (max-width: 600px) {
-      body { padding: 18px 12px 40px; }
-      .workflow-grid, .metrics-grid { grid-template-columns: 1fr; }
-      .dashboard { grid-template-columns: 1fr; }
-      .topbar { align-items: flex-start; }
+      .agent-bar, .metrics-grid { grid-template-columns: 1fr; }
+      .mini-grid { grid-template-columns: 1fr; }
+      body { padding: 14px 12px 30px; }
     }
   </style>
 </head>
@@ -448,20 +437,51 @@
   <div class="page">
     <header class="topbar">
       <div>
-        <span class="eyebrow">Executive modernization pulse</span>
-        <h1>Intent to Value: DayTrader UI &amp; Liberty Modernization</h1>
-        <p class="subtitle">Legacy tWAS baseline, unguarded AI drift, EDRI enforcement, and the Golden Path that keeps DayTrader stable, compliant, and measurable.</p>
+        <span class="eyebrow">Agentic Delivery Lane</span>
+        <h1>Agentic Delivery Lane: WAS to Liberty Modernization + EDRI Control Plane</h1>
+        <p class="subtitle">Understand. Run. Migrate. Compare. Govern. A practical delivery model for transforming DayTrader from legacy WAS to Liberty with measurable risk control.</p>
       </div>
       <a class="actions-link" href="https://github.com/sharejoi/edri-daytrader-liberty-demo/actions" target="_blank" rel="noreferrer">GitHub Actions</a>
     </header>
 
     <section class="panel">
-      <h2>Release story: four-step value path</h2>
-      <div class="button-row" id="stepButtons">
-        <button class="step-btn active" data-step="1">Step 1: Legacy tWAS Baseline</button>
-        <button class="step-btn step-red" data-step="2">Step 2: Unguarded AI UI Change</button>
-        <button class="step-btn step-red" data-step="3">Step 3: EDRI + Cognitive QE Catch</button>
-        <button class="step-btn step-green" data-step="4">Step 4: Golden Path AI Delivery</button>
+      <h2>EDRI plugin stack</h2>
+      <div class="agent-bar">
+        <div class="agent-card active" data-agent="migration">
+          <span class="agent-kicker">Plugin</span>
+          <div class="agent-title">Migration Plugin</div>
+          <div class="agent-text">Maps legacy WAS behavior to Liberty constraints and hidden NFRs.</div>
+        </div>
+        <div class="agent-card" data-agent="java">
+          <span class="agent-kicker">Plugin</span>
+          <div class="agent-title">Java Plugin</div>
+          <div class="agent-text">Tracks EJB transactions, bytecode compatibility, and runtime contracts.</div>
+        </div>
+        <div class="agent-card" data-agent="was">
+          <span class="agent-kicker">Plugin</span>
+          <div class="agent-title">WebSphere Plugin</div>
+          <div class="agent-text">Mines tWAS config and connection settings such as maxConnections=50.</div>
+        </div>
+        <div class="agent-card" data-agent="bdd">
+          <span class="agent-kicker">Plugin</span>
+          <div class="agent-title">BDD Plugin</div>
+          <div class="agent-text">Runs the shared behavior and load suite before any release gate decisions.</div>
+        </div>
+      </div>
+
+      <div class="gov-box" id="govBox">
+        <strong>EDRI Quality Assurance &amp; Cognitive DevOps Governance</strong>
+        Migration work is anchored to a shared evidence model: spec discovery, behavioral parity, config parity, and promotion control. The org only moves forward when the hidden contract is understood and the release gate is green.
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Four-step DayTrader comparison simulator</h2>
+      <div class="step-bar" id="stepButtons">
+        <button class="step-btn active" data-step="1">Step 1: Understand &amp; Auto-Discover NFRs</button>
+        <button class="step-btn red" data-step="2">Step 2: Run Shared BDD + Load Suite</button>
+        <button class="step-btn red" data-step="3">Step 3: Two-Key Compare &amp; Risk Gate</button>
+        <button class="step-btn green" data-step="4">Step 4: Cognitive DevOps Promotion</button>
       </div>
 
       <div class="compare-grid">
@@ -478,16 +498,16 @@
           <div class="browser-body">
             <div class="browser-header">
               <span id="pageTitle">Trade Home</span>
-              <span class="status-chip" id="statusChip">baseline</span>
+              <span class="status-pill" id="statusChip">baseline</span>
             </div>
 
-            <div class="dashboard" id="dashboardCards">
+            <div class="mini-grid">
               <div class="mini-card">
                 <div class="mini-label">p99 latency</div>
                 <div class="mini-value" id="latency">98ms</div>
               </div>
               <div class="mini-card">
-                <div class="mini-label">risk score</div>
+                <div class="mini-label">risk</div>
                 <div class="mini-value" id="riskScore">1.20</div>
               </div>
               <div class="mini-card">
@@ -496,26 +516,26 @@
               </div>
             </div>
 
-            <div class="product-table">
-              <div class="product-row header">
+            <div class="table">
+              <div class="row header">
                 <div>Module</div>
                 <div>Status</div>
                 <div>Notes</div>
               </div>
-              <div class="product-row">
+              <div class="row">
                 <div>Trade home</div>
                 <div id="row1">stable</div>
-                <div id="row1n">legacy JSP</div>
+                <div id="row1n">legacy UI</div>
               </div>
-              <div class="product-row">
+              <div class="row">
                 <div>EJB session</div>
                 <div id="row2">stable</div>
-                <div id="row2n">container-aware</div>
+                <div id="row2n">contract-aware</div>
               </div>
-              <div class="product-row">
-                <div>Connection pool</div>
+              <div class="row">
+                <div>Pool config</div>
                 <div id="row3">max 50</div>
-                <div id="row3n">tWAS baseline</div>
+                <div id="row3n">NFR discovered</div>
               </div>
             </div>
           </div>
@@ -523,7 +543,7 @@
 
         <div class="diff-card">
           <div class="diff-header">
-            <span>Code diff</span>
+            <span>Diff</span>
             <span id="diffLabel">legacy baseline</span>
           </div>
           <pre id="diffCode"></pre>
@@ -532,55 +552,23 @@
     </section>
 
     <section class="panel">
-      <h2>Cognitive QE workflow explorer</h2>
-      <div class="workflow-grid" id="workflowGrid">
-        <div class="workflow-card active" data-stage="1">
-          <span class="workflow-stage">1.1–1.3</span>
-          <div class="workflow-title">Spec intake</div>
-          <div class="workflow-desc">Discovery, stories, and NFR criteria before code generation.</div>
-        </div>
-        <div class="workflow-card" data-stage="2">
-          <span class="workflow-stage">2.1–2.3</span>
-          <div class="workflow-title">Test case design</div>
-          <div class="workflow-desc">Qe logic turns constraints into concurrent UI and API scenarios.</div>
-        </div>
-        <div class="workflow-card" data-stage="3">
-          <span class="workflow-stage">3 &amp; 4</span>
-          <div class="workflow-title">TDM</div>
-          <div class="workflow-desc">Masked data, execution, and root-cause signal capture.</div>
-        </div>
-        <div class="workflow-card" data-stage="4">
-          <span class="workflow-stage">5.1–5.3</span>
-          <div class="workflow-title">Two-key gate</div>
-          <div class="workflow-desc">QE evidence and config parity are evaluated together.</div>
-        </div>
-        <div class="workflow-card" data-stage="5">
-          <span class="workflow-stage">5.4</span>
-          <div class="workflow-title">IDP central storage</div>
-          <div class="workflow-desc">Golden patterns are retained for future delivery.</div>
-        </div>
-      </div>
-      <div class="workflow-detail" id="workflowDetail"></div>
-    </section>
-
-    <section class="panel">
-      <h2>Outcome summary</h2>
-      <p class="panel-copy">The correct target state is to preserve the known-good DayTrader baseline, detect hidden legacy constraints early, and use a structured release gate before AI-generated Liberty changes reach production.</p>
+      <h2>Understand. Run. Migrate. Compare. Govern.</h2>
+      <p class="panel-copy">The control plane closes the loop: first discover hidden constraints, then run a shared BDD + load suite, then compare Liberty with the original tWAS baseline, and finally gate or promote via Cognitive DevOps.</p>
       <div class="metrics-grid">
         <div class="metric-box">
-          <div class="metric-label">Legacy baseline</div>
-          <div class="metric-value red">tradehome.jsp</div>
+          <div class="metric-label">Understand</div>
+          <div class="metric-value red">edri_discover.py</div>
         </div>
         <div class="metric-box">
-          <div class="metric-label">Hidden defect</div>
-          <div class="metric-value red">EJBTransactionRolledbackException</div>
+          <div class="metric-label">Run</div>
+          <div class="metric-value red">UI passes, Liberty fails under load</div>
         </div>
         <div class="metric-box">
-          <div class="metric-label">EDRI gate</div>
+          <div class="metric-label">Compare</div>
           <div class="metric-value red">7.80 RED NO-GO</div>
         </div>
         <div class="metric-box">
-          <div class="metric-label">Golden path</div>
+          <div class="metric-label">Govern</div>
           <div class="metric-value green">2.50 GREEN GO • 142ms p99</div>
         </div>
       </div>
@@ -588,6 +576,22 @@
   </div>
 
   <script>
+    const agentContent = {
+      migration: 'Migration work begins by translating the hidden server and EJB contract into a codified NFR model before any UI code is changed.',
+      java: 'The Java plugin validates EJB transactions and runtime contracts so the app does not drift from the original session-bean semantics.',
+      was: 'The WebSphere plugin mines legacy runtime settings, including the original pool size and connection manager behavior from the tWAS resource contract.',
+      bdd: 'The BDD plugin executes the shared reuse suite across both the original and migrated app to prove behavior and performance parity before promotion.'
+    };
+
+    document.querySelectorAll('.agent-card').forEach((card) => {
+      card.addEventListener('click', () => {
+        document.querySelectorAll('.agent-card').forEach((el) => el.classList.remove('active'));
+        card.classList.add('active');
+        const agent = card.dataset.agent;
+        document.getElementById('govBox').innerHTML = '<strong>EDRI Quality Assurance &amp; Cognitive DevOps Governance</strong>' + agentContent[agent];
+      });
+    });
+
     const stepData = {
       1: {
         browserAddress: 'tradehome.jsp',
@@ -598,80 +602,75 @@
         riskScore: '1.20',
         poolValue: '50',
         row1: 'stable',
-        row1n: 'legacy JSP',
+        row1n: 'legacy UI',
         row2: 'stable',
-        row2n: 'container-aware',
+        row2n: 'contract-aware',
         row3: 'max 50',
-        row3n: 'tWAS baseline',
+        row3n: 'NFR discovered',
         diffLabel: 'legacy baseline',
-        diff: `<span class="token-muted">&lt;resources.jdbc:JDBCProvider name="DB2 Universal JDBC Driver Provider"&gt;</span>
-  <span class="token-blue">&lt;factories name="DayTraderDataSource" jndiName="jdbc/TradeDataSource"&gt;</span>
-    <span class="token-green">&lt;connectionPool maxConnections="50" minConnections="10" connectionTimeout="180"/&gt;</span>
-  <span class="token-blue">&lt;/factories&gt;</span>
-<span class="token-muted">&lt;/resources.jdbc:JDBCProvider&gt;</span>
+        diff: `<span class="token-muted"># edri_discover.py mines legacy tWAS contract</span>
+<span class="token-blue">TradeSLSBBean</span> <span class="token-muted">session bean contract discovered</span>
+<span class="token-green">maxConnections="50"</span> <span class="token-muted">identified from legacy resources</span>
+<span class="token-amber">NFR passport: db2 pool = 50, EJB parity = required</span>
 
-<span class="token-muted"># Verified legacy contract</span>
-<span class="token-amber">maxConnections = 50</span>
-<span class="token-amber">EJB session behavior remains coordinated</span>`
+<span class="token-muted">Legacy source signal:</span>
+<span class="token-blue">&lt;connectionPool maxConnections="50" minConnections="10" /&gt;</span>`
       },
       2: {
-        browserAddress: 'daytrader/ui?refresh=live',
+        browserAddress: 'daytrader/ui?shared-bdd=true',
         pageTitle: 'Trade Home',
-        status: 'crash',
+        status: 'parity diff',
         statusClass: 'status-red',
         latency: '2.1s',
         riskScore: '9.40',
         poolValue: '0',
-        row1: 'failed',
-        row1n: 'UI freeze',
+        row1: 'pass',
+        row1n: 'UI renders',
         row2: 'error',
         row2n: 'EJBTransactionRolledbackException',
         row3: 'missing',
-        row3n: 'maxPoolSize=50 absent',
-        diffLabel: 'unguarded AI drift',
-        diff: `<span class="token-red">- &lt;featureManager&gt;</span>
-<span class="token-red">-   &lt;feature&gt;enterpriseBeans-4.0&lt;/feature&gt;</span>
-<span class="token-red">- &lt;dataSource .../&gt;</span>
-<span class="token-red">- &lt;connectionManager id="conMgr1" maxPoolSize="100"/&gt;</span>
+        row3n: 'Liberty contract drift',
+        diffLabel: 'shared BDD + load diff',
+        diff: `<span class="token-green">Original tWAS</span>
+  UI: <span class="token-green">PASS</span>
+  Load: <span class="token-green">PASS</span>
+  Pool: <span class="token-green">maxConnections=50</span>
 
-<span class="token-green">+ &lt;featureManager&gt;</span>
-<span class="token-green">+   &lt;feature&gt;enterpriseBeans-4.0&lt;/feature&gt;</span>
-<span class="token-green">+ &lt;dataSource ...&gt;</span>
-<span class="token-green">+   &lt;connectionManager maxPoolSize="50"/&gt;</span>
-<span class="token-green">+ &lt;/dataSource&gt;</span>
+<span class="token-red">Unguarded Liberty</span>
+  UI: <span class="token-green">PASS</span>
+  Load: <span class="token-red">FAIL</span>
+  Pool: <span class="token-red">missing maxPoolSize=50</span>
+  Runtime: <span class="token-red">EJBTransactionRolledbackException</span>
 
-<span class="token-amber">Runtime symptom:</span>
-<span class="token-amber">EJBTransactionRolledbackException</span>
-<span class="token-amber">Legacy contract mismatch: missing maxPoolSize=50</span>`
+<span class="token-amber">Parity signal: UI behavior passes, but Liberty runtime fails under load.</span>`
       },
       3: {
-        browserAddress: 'daytrader/ui?gate=edri-qe',
-        pageTitle: 'Gate Review',
+        browserAddress: 'daytrader/ui?gate=edri',
+        pageTitle: 'Release Gate',
         status: 'red no-go',
         statusClass: 'status-red',
         latency: '1.6s',
         riskScore: '7.80',
         poolValue: 'FAIL',
         row1: 'blocked',
-        row1n: 'critical path at risk',
+        row1n: 'critical path risk',
         row2: 'locked',
-        row2n: 'EDRI signal caught drift',
+        row2n: 'config drift',
         row3: 'red',
         row3n: '7.80 RED NO-GO',
-        diffLabel: 'EDRI + Cognitive QE catch',
-        diff: `<span class="token-amber">Cognitive QE result:</span>
-  critical_path_coverage_pct = <span class="token-red">82.0</span>
-  load_test_p99_ms = <span class="token-red">1420</span>
-  dihi_score = <span class="token-red">64</span>
+        diffLabel: 'EDRI compare & risk gate',
+        diff: `<span class="token-amber">Two-Key Compare</span>
+  Key 1: <span class="token-red">QE evidence below threshold</span>
+  Key 2: <span class="token-red">config parity mismatch + 2.5x risk exposure</span>
 
-<span class="token-amber">EDRI config parity:</span>
-  db2_connection_pool_50_passed = <span class="token-red">false</span>
-  liberty_ejb_feature_passed = <span class="token-red">false</span>
-  weighted_signal_score = <span class="token-red">3.12</span>
-  enterprise_risk_score = <span class="token-red">7.80</span>
+  risk_score = <span class="token-red">7.80</span>
+  member_exposure = <span class="token-red">2.5x</span>
+  decision = <span class="token-red">NO-GO</span>
 
-<span class="token-red">DECISION: NO-GO</span>
-<span class="token-red">Hard stop triggered: MISSING_DB2_MAX_POOL_SIZE_50</span>`
+<span class="token-red">Blocking conditions:</span>
+  - missing maxPoolSize=50
+  - missing enterpriseBeans parity
+  - EJBTransactionRolledbackException under concurrency`
       },
       4: {
         browserAddress: 'daytrader/ui?gate=golden',
@@ -681,13 +680,13 @@
         latency: '142ms',
         riskScore: '2.50',
         poolValue: '50',
-        row1: 'stable',
-        row1n: 'golden path active',
+        row1: 'eligible',
+        row1n: 'golden path',
         row2: 'healthy',
-        row2n: 'enterpriseBeans verified',
+        row2n: 'EJB parity confirmed',
         row3: 'pass',
         row3n: '2.50 GREEN GO',
-        diffLabel: 'golden path AI delivery',
+        diffLabel: 'Cognitive DevOps promotion',
         diff: `<span class="token-green">&lt;featureManager&gt;</span>
   <span class="token-green">&lt;feature&gt;enterpriseBeans-4.0&lt;/feature&gt;</span>
 <span class="token-green">&lt;/featureManager&gt;</span>
@@ -696,25 +695,24 @@
   <span class="token-green">&lt;connectionManager maxPoolSize="50"/&gt;</span>
 <span class="token-green">&lt;/dataSource&gt;</span>
 
-<span class="token-amber">Key outcome:</span>
+<span class="token-amber">Record in Box 5.4:</span>
   p99 latency = <span class="token-green">142ms</span>
-  enterprise_risk_score = <span class="token-green">2.50</span>
-  decision = <span class="token-green">GREEN GO</span>`
+  risk score = <span class="token-green">2.50</span>
+  decision = <span class="token-green">GREEN GO</span>
+  scale to 2026 portfolio = <span class="token-green">enabled</span>`
       }
     };
 
     function renderStep(step) {
       const s = stepData[step];
-      const status = document.getElementById('statusChip');
-      const browserAddress = document.getElementById('browserAddress');
-      const pageTitle = document.getElementById('pageTitle');
-      const diffLabel = document.getElementById('diffLabel');
-      const diffCode = document.getElementById('diffCode');
-
       document.querySelectorAll('.step-btn').forEach((btn) => {
         btn.classList.toggle('active', Number(btn.dataset.step) === step);
       });
 
+      document.getElementById('browserAddress').textContent = s.browserAddress;
+      document.getElementById('pageTitle').textContent = s.pageTitle;
+      document.getElementById('statusChip').textContent = s.status;
+      document.getElementById('statusChip').className = 'status-pill ' + s.statusClass;
       document.getElementById('latency').textContent = s.latency;
       document.getElementById('riskScore').textContent = s.riskScore;
       document.getElementById('poolValue').textContent = s.poolValue;
@@ -724,13 +722,8 @@
       document.getElementById('row2n').textContent = s.row2n;
       document.getElementById('row3').textContent = s.row3;
       document.getElementById('row3n').textContent = s.row3n;
-
-      browserAddress.textContent = s.browserAddress;
-      pageTitle.textContent = s.pageTitle;
-      status.textContent = s.status;
-      status.className = 'status-chip ' + s.statusClass;
-      diffLabel.textContent = s.diffLabel;
-      diffCode.innerHTML = s.diff;
+      document.getElementById('diffLabel').textContent = s.diffLabel;
+      document.getElementById('diffCode').innerHTML = s.diff;
     }
 
     document.getElementById('stepButtons').addEventListener('click', (event) => {
@@ -739,46 +732,7 @@
       renderStep(Number(btn.dataset.step));
     });
 
-    const workflowStages = {
-      1: {
-        title: '1.1–1.3 • Spec intake and discovery',
-        body: 'EDRI inspects the legacy DayTrader tWAS app, extracts the pool and EJB contract surprises, and feeds them into requirement and NFR capture before AI implementation begins.'
-      },
-      2: {
-        title: '2.1–2.3 • Test case design',
-        body: 'Cognitive QE translates the discovered constraints into a test matrix covering concurrency, connection exhaustion, failover, and storefront reliability conditions.'
-      },
-      3: {
-        title: '3 & 4 • TDM and execution',
-        body: 'Masked data, workload simulation, and root-cause tracing isolate whether the issue is UI logic, container behavior, or configuration drift from the legacy app.'
-      },
-      4: {
-        title: '5.1–5.3 • Two-key release gate',
-        body: 'The gate combines QE evidence with config parity and risk weighting. A critical-path failure or misconfigured Liberty feature remains a hard stop.'
-      },
-      5: {
-        title: '5.4 • IDP central storage',
-        body: 'Once a drift pattern is caught, it becomes a reusable golden-path pattern in central storage so future migrations inherit the fix without re-discovery.'
-      }
-    };
-
-    function renderWorkflow(stage) {
-      const detail = document.getElementById('workflowDetail');
-      const card = workflowStages[stage];
-      detail.innerHTML = `<strong>${card.title}</strong>${card.body}`;
-      document.querySelectorAll('.workflow-card').forEach((el) => {
-        el.classList.toggle('active', Number(el.dataset.stage) === stage);
-      });
-    }
-
-    document.getElementById('workflowGrid').addEventListener('click', (event) => {
-      const card = event.target.closest('.workflow-card');
-      if (!card) return;
-      renderWorkflow(Number(card.dataset.stage));
-    });
-
     renderStep(1);
-    renderWorkflow(1);
   </script>
 </body>
 </html>
